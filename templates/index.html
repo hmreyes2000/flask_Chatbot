@@ -1,0 +1,66 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot v1</title>
+</head>
+
+<script>
+    function sendMessage() {
+        var userMessage = document.getElementById('user_message').value;
+
+        fetch('/send_message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'user_message=' + encodedURIComponent(userMessage),
+        })
+        .then(response => response.json())
+        .then(data => {
+            //handle the bot's response
+            var responseLlama = data.response_llama;
+
+            console.log('Bot response (LlamaAPI):', responseLlama);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+<script>
+    function recordedSpeech(){
+        //use the web speech API or another library for speech recognition
+        //update the inout box with the recognized speech 
+
+        //Send the recorded sppech to the server using AJAX
+        var recordedSpeech = /* get the recorded sppech */
+        fetch('/record_speech', {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify({speech: recordedSpeech})
+        })
+        .then(response => response.json())
+        .then(data => {
+            //handle the bot's response
+            console.log('Bot response', data.response);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+
+
+<body>
+    <!-- Your HTML code for the chat application -->
+    <textarea id="user_message" rows="4" cols="50"></textarea><br>
+    <button onclick="recordedSpeech()"> Record Speech </button>
+</body>
+</html>
