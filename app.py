@@ -3,7 +3,7 @@ from llamaapi import LlamaAPI
 import speech_recognition as sr
 import pyaudio
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 #initializes the OpenAI and LlamaAPI
 API_TOKEN = 'LL-6qhAUZklQw8Dzf2WYrPw58wsnNTdSx7BUWKjx1JoAVNqdTI9CwjIR8xGpgDmBeve'
