@@ -1,66 +1,89 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot v1</title>
+    <title>AI Chatbot</title>
+    <!--include the css stylesheet-->
+    <link rel="stylesheet" href="styles.css">
 </head>
-
-<script>
-    function sendMessage() {
-        var userMessage = document.getElementById('user_message').value;
-
-        fetch('/send_message', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'user_message=' + encodedURIComponent(userMessage),
-        })
-        .then(response => response.json())
-        .then(data => {
-            //handle the bot's response
-            var responseLlama = data.response_llama;
-
-            console.log('Bot response (LlamaAPI):', responseLlama);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-</script>
-
-<script>
-    function recordedSpeech(){
-        //use the web speech API or another library for speech recognition
-        //update the inout box with the recognized speech 
-
-        //Send the recorded sppech to the server using AJAX
-        var recordedSpeech = /* get the recorded sppech */
-        fetch('/record_speech', {
-            method: 'POST',
-            headers: {
-                "Content-Type": 'application/json',
-            },
-            body: JSON.stringify({speech: recordedSpeech})
-        })
-        .then(response => response.json())
-        .then(data => {
-            //handle the bot's response
-            console.log('Bot response', data.response);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-</script>
-
-
 
 <body>
     <!-- Your HTML code for the chat application -->
+    <div id="chat-box" style="height: 300px; overflow-y: auto;"></div> <!-- This is the chat box where messages will be displayed -->
     <textarea id="user_message" rows="4" cols="50"></textarea><br>
+
+    <!--Dropown menu for selcting language-->
+    <select id="language-select">
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="pr">Portuguese</option>
+    </select>
+
+    <button onclick="sendMessage()"> Send </button> <!-- This button triggers sendMessage function -->
     <button onclick="recordedSpeech()"> Record Speech </button>
+
+    <script>
+        function appendMessage(message) {
+            // Create a new div element to display the message
+            var messageDiv = document.createElement('div');
+            messageDiv.textContent = message;
+
+            // Append the message to the chat box
+            document.getElementById('chat-box').appendChild(messageDiv);
+        }
+
+        function sendMessage() {
+            var userMessage = document.getElementById('user_message').value;
+
+            fetch('/send_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'user_message=' + encodeURIComponent(userMessage),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the bot's response
+                var responseLlama = data.response_llama;
+                appendMessage('You: ' + userMessage); // Display user's message
+                appendMessage('Bot: ' + responseLlama); // Display bot's response
+                console.log('Bot response (LlamaAPI):', responseLlama);
+
+                //clears the input field after sening the message
+                document.getElementById('user_message').value = "";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function recordedSpeech(){
+            // Use the web speech API or another library for speech recognition
+            // Update the input box with the recognized speech 
+
+            // Send the recorded speech to the server using AJAX
+            var recordedSpeech = /* get the recorded sppech */
+            fetch('/record_speech', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": 'application/json',
+                },
+                body: JSON.stringify({speech: recordedSpeech})
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the bot's response
+                var responseLlama = data.response;
+                appendMessage('You: ' + recordedSpeech); // Display user's recorded speech
+                appendMessage('Bot: ' + responseLlama); // Display bot's response
+                console.log('Bot response', responseLlama);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </body>
 </html>
