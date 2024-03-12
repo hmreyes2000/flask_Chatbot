@@ -9,19 +9,33 @@
 </head>
 
 <body>
+    <!--sidebar structure-->
+    <div id="sidebar">
+        <div id="logo">
+            <!-- add your logo image here-->
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        </div>
+        <button onclick="startNewChat()">New Chat</button>
+        <!--Dropown menu for selcting language-->
+        <div id="language-select-sidebar">
+            <select id="language-select">
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="pr">Portuguese</option>
+            </select>
+        </div>
+    </div>
+    
     <!-- Your HTML code for the chat application -->
     <div id="chat-box" style="height: 300px; overflow-y: auto;"></div> <!-- This is the chat box where messages will be displayed -->
-    <textarea id="user_message" rows="4" cols="50"></textarea><br>
+    <textarea id="user_message" rows="4" cols="50" onkeydown="handlekeyPress(event)"></textarea><br>
 
-    <!--Dropown menu for selcting language-->
-    <select id="language-select">
-        <option value="en">English</option>
-        <option value="es">Spanish</option>
-        <option value="pr">Portuguese</option>
-    </select>
-
-    <button onclick="sendMessage()"> Send </button> <!-- This button triggers sendMessage function -->
-    <button onclick="recordedSpeech()"> Record Speech </button>
+    <div id="send-button">
+        <button onclick="sendMessage()"> Send </button> <!-- This button triggers sendMessage function -->
+    </div>
+    <div id="record-speech-button">
+    <button onclick="recordAndProcess()"> Record Speech </button>
+    </div>
 
     <script>
         function appendMessage(message) {
@@ -59,26 +73,28 @@
             });
         }
 
-        function recordedSpeech(){
-            // Use the web speech API or another library for speech recognition
-            // Update the input box with the recognized speech 
+        function handlekeyPress(event) {
+            if(event.key === 'Enter' && !event.shiftkey){
+                event.preventDefault(); //prevents the newline character from being added
+                sendMessage();
+            }
+        }
 
-            // Send the recorded speech to the server using AJAX
-            var recordedSpeech = /* get the recorded sppech */
-            fetch('/record_speech', {
+        function recordAndProcess() {
+            // Send a request to Flask route for speech recognition
+            fetch('/record_and_process', {
                 method: 'POST',
-                headers: {
-                    "Content-Type": 'application/json',
-                },
-                body: JSON.stringify({speech: recordedSpeech})
             })
             .then(response => response.json())
             .then(data => {
                 // Handle the bot's response
-                var responseLlama = data.response;
-                appendMessage('You: ' + recordedSpeech); // Display user's recorded speech
-                appendMessage('Bot: ' + responseLlama); // Display bot's response
-                console.log('Bot response', responseLlama);
+                var userMessage = data.user_message;
+                var botResponseText = data.bot_response_text;
+                var botResponseVoice = data.bot_response_voice;
+
+                appendMessage('You (Recorded): ' + userMessage);
+                appendMessage('Bot (Text): ' + botResponseText);
+                appendMessage('Bot (Voice): ' + botResponseVoice);
             })
             .catch(error => {
                 console.error('Error:', error);
