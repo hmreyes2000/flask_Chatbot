@@ -1,17 +1,39 @@
-/*sidebar*/
-#sidebar{
+/* Sidebar */
+#sidebar {
     flex-direction: column;
     width: 250px;
     background-color: lightgrey;
     padding: 20px;
     position: fixed;
     height: 100%;
-    row-gap: 10px;
-    grid-template-rows: auto;
 }
 
-/*new chat button*/
-#sidebar button{
+#footer {
+   row-gap: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 10;
+    width: 200px;
+    background-color: lightgrey; /* Match the sidebar's background color */
+    padding: 30px;
+
+}
+
+#footer p {
+    margin: 0; /* Remove default margin */
+}
+
+#footer ul {
+    padding: 0; /* Remove default padding */
+    list-style-type: none; /* Remove bullet points */
+}
+
+#footer li {
+    font-size: 14px; /* Adjust font size as needed */
+}
+
+/* New chat button */
+#sidebar button {
     width: 50%;
     padding: 10px;
     background-color: white;
@@ -24,49 +46,58 @@
     cursor: pointer;
     margin-bottom: 40px;
     margin-left: 20px;
-
 }
 
-.chat-container, .language-container{
+/* Chat and language containers */
+.chat-container,
+.language-container {
     display: grid;
     grid-template-columns: auto auto;
     column-gap: 10px;
     margin-right: 68px;
-   
 }
 
+/* Icon styling */
 #sidebar i {
     margin-left: 35px;
 }
 
-#logo{
+/* Logo */
+#logo {
     text-align: center;
     margin-top: 40px;
 }
 
-#logo img{
+#logo img {
     max-width: 100%;
     height: auto;
     margin-bottom: 100px;
     display: inline-block;
 }
 
-#content{
-    margin-left: 240px;
-}
-
+/* Main content */
 #content {
-    margin-left: 440px; /* Adjust to accommodate the sidebar width */
+    margin-left: 240px;
+    /* Adjust to accommodate the sidebar width */
 }
 
+/* Adjustments for specific elements */
 #chat-box,
 #user_message,
 #send-button,
 #record-speech-button {
-    margin-left: 360px; 
+    position: relative;
+    margin-left: 360px;
+    margin-bottom: 10px;
+    /* Adjust to move elements to the left */
 }
 
-#chat-box{
-    margin-bottom: 240px;
+#chat-box {
+    position: relative;
+    margin-left: 360px;
+    margin-bottom: 360px;
+    /* Adjust to create space for other elements */
 }
+
+
 

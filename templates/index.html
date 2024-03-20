@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,8 @@
     <div id="sidebar">
         <div id="logo">
             <!-- add your logo image here-->
-           <img src= "{{url_for('static', filename='fairfieldUniversityLogo.png')}}" alt="Logo" height="150" width="150">
+            <img src="{{url_for('static', filename='fairfieldUniversityLogo.png')}}" alt="Logo" height="150"
+                width="150">
         </div>
         <i class="fa-solid fa-comments"></i><button onclick="startNewChat()">New chat </button>
         <!--Dropown menu for selcting language-->
@@ -27,16 +29,30 @@
             </select>
         </div>
     </div>
-    
+
+    <!-- Footer -->
+    <div id="footer">
+        <p>Presented By:</p>
+        <ul>
+            <li>Andrew Visceglia</li>
+            <li>Connor Hehn</li>
+            <li>David McNulty</li>
+            <li>Reyes Huerta</li>
+            <li>Dr. Sidike Pahending</li>
+        </ul>
+    </div>
+    </div>
+
     <!-- Your HTML code for the chat application -->
-    <div id="chat-box" style="height: 300px; overflow-y: auto;"></div> <!-- This is the chat box where messages will be displayed -->
+    <div id="chat-box" style="height: 300px; overflow-y: auto;"></div>
+    <!-- This is the chat box where messages will be displayed -->
     <textarea id="user_message" rows="4" cols="50" onkeydown="handlekeyPress(event)"></textarea><br>
 
     <div id="send-button">
         <button onclick="sendMessage()"> Send </button> <!-- This button triggers sendMessage function -->
     </div>
     <div id="record-speech-button">
-    <button onclick="recordAndProcess()"> Record Speech </button>
+        <button onclick="recordAndProcess()"> Record Speech </button>
     </div>
 
     <script>
@@ -59,24 +75,24 @@
                 },
                 body: 'user_message=' + encodeURIComponent(userMessage),
             })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the bot's response
-                var responseLlama = data.response_llama;
-                appendMessage('You: ' + userMessage); // Display user's message
-                appendMessage('Bot: ' + responseLlama); // Display bot's response
-                console.log('Bot response (LlamaAPI):', responseLlama);
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the bot's response
+                    var responseLlama = data.response_llama;
+                    appendMessage('You: ' + userMessage); // Display user's message
+                    appendMessage('Bot: ' + responseLlama); // Display bot's response
+                    console.log('Bot response (LlamaAPI):', responseLlama);
 
-                //clears the input field after sening the message
-                document.getElementById('user_message').value = "";
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                    //clears the input field after sening the message
+                    document.getElementById('user_message').value = "";
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
 
         function handlekeyPress(event) {
-            if(event.key === 'Enter' && !event.shiftkey){
+            if (event.key === 'Enter' && !event.shiftkey) {
                 event.preventDefault(); //prevents the newline character from being added
                 sendMessage();
             }
@@ -87,21 +103,22 @@
             fetch('/record_and_process', {
                 method: 'POST',
             })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the bot's response
-                var userMessage = data.user_message;
-                var botResponseText = data.bot_response_text;
-                var botResponseVoice = data.bot_response_voice;
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the bot's response
+                    var userMessage = data.user_message;
+                    var botResponseText = data.bot_response_text;
+                    var botResponseVoice = data.bot_response_voice;
 
-                appendMessage('You (Recorded): ' + userMessage);
-                appendMessage('Bot (Text): ' + botResponseText);
-                appendMessage('Bot (Voice): ' + botResponseVoice);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                    appendMessage('You (Recorded): ' + userMessage);
+                    appendMessage('Bot (Text): ' + botResponseText);
+                    appendMessage('Bot (Voice): ' + botResponseVoice);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
     </script>
 </body>
+
 </html>
