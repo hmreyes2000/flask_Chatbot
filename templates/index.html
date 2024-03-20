@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/68b03cbd7a.js" crossorigin="anonymous"></script>
     <title>AI Chatbot</title>
     <!--include the css stylesheet-->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
@@ -13,11 +14,12 @@
     <div id="sidebar">
         <div id="logo">
             <!-- add your logo image here-->
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+           <img src= "{{url_for('static', filename='fairfieldUniversityLogo.png')}}" alt="Logo" height="150" width="150">
         </div>
-        <button onclick="startNewChat()">New Chat</button>
+        <i class="fa-solid fa-comments"></i><button onclick="startNewChat()">New chat </button>
         <!--Dropown menu for selcting language-->
-        <div id="language-select-sidebar">
+        <div id="language-select-sidebar" class="language-container">
+            <i class="fa-solid fa-earth-americas"></i>
             <select id="language-select">
                 <option value="en">English</option>
                 <option value="es">Spanish</option>
