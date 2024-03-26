@@ -6,6 +6,16 @@
     padding: 20px;
     position: fixed;
     height: 100%;
+    float: left;
+}
+
+#user-manual {
+    float: right; 
+    
+}
+
+h3{
+    text-align: center;
 }
 
 #footer {
@@ -43,7 +53,7 @@
 #sidebar button {
     width: 50%;
     padding: 10px;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     color: black;
     border: none;
     text-align: center;
@@ -62,6 +72,7 @@
     grid-template-columns: auto auto;
     column-gap: 10px;
     margin-right: 68px;
+    margin-bottom: 40px;
 }
 
 /* Icon styling */
@@ -82,11 +93,6 @@
     display: inline-block;
 }
 
-/* Main content */
-#content {
-    margin-left: 240px;
-    /* Adjust to accommodate the sidebar width */
-}
 
 /* Adjustments for specific elements */
 #chat-box,
