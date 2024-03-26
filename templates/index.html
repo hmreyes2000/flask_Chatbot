@@ -46,7 +46,7 @@
     <!-- Your HTML code for the chat application -->
     <div id="chat-box" style="height: 300px; overflow-y: auto;"></div>
     <!-- This is the chat box where messages will be displayed -->
-    <textarea id="user_message" rows="4" cols="50" onkeydown="handlekeyPress(event)"></textarea><br>
+    <textarea id="user_message" rows="8" cols="100" onkeydown="handlekeyPress(event)"></textarea><br>
 
     <div id="send-button">
         <button onclick="sendMessage()"> Send </button> <!-- This button triggers sendMessage function -->
@@ -79,11 +79,14 @@
                 .then(data => {
                     // Handle the bot's response
                     var responseLlama = data.response_llama;
-                    appendMessage('You: ' + userMessage); // Display user's message
-                    appendMessage('Bot: ' + responseLlama); // Display bot's response
+                    // Display user's message
+                    appendMessage('You: ' + userMessage); 
+                    // Display bot's response
+                    appendMessage('Bot: ' + responseLlama); 
+
                     console.log('Bot response (LlamaAPI):', responseLlama);
 
-                    //clears the input field after sening the message
+                    //clears the input field after sending the message
                     document.getElementById('user_message').value = "";
                 })
                 .catch(error => {

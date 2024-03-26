@@ -19,7 +19,14 @@
 
 }
 
+#language-select {
+    font-size: 18px;
+    padding: 8px, 12px;
+    margin-left: 12px;
+}
+
 #footer p {
+    font-weight: bold;
     margin: 0; /* Remove default margin */
 }
 
@@ -93,11 +100,11 @@
 }
 
 #chat-box {
-    position: relative;
+    display: flex;
+    flex-direction: column;
     margin-left: 360px;
     margin-bottom: 360px;
     /* Adjust to create space for other elements */
 }
-
 
 
