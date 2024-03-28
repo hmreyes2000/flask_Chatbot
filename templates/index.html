@@ -121,6 +121,18 @@
             }
         }
 
+        function startNewChat() {
+            //clear the chat messages 
+            document.getElementById('chat-box').innerHTML = '';
+
+            //optionally, reset any other variables or states 
+            //Reset the chat input field
+            document.getElementById('user_message').value = '';
+
+            //Notifies the user that a new chat has started 
+            alert('New chat started! You can begin typing your message. ')
+        }
+
         function handleSpotifyClick() {
             //add logic for the spotify api interaction 
             console.log("Spotify API button clicked")
